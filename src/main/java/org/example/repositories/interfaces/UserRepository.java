@@ -6,5 +6,6 @@ public interface UserRepository {
     void addUser(User user);
     User findUser(String email);
     void displayUsers();
+    void editUser(User user);
 
 }

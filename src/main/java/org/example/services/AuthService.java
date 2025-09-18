@@ -18,14 +18,19 @@ public class AuthService {
         userRepository.addUser(user);
         return true;
     }
-    public boolean login(String email, String password) {
+    public User login(String email, String password) {
         User user = userRepository.findUser(email);
 
         if (user != null && user.getPassword().equals(password)) {
-            return true;
+            return user;
         }
-        return false;
+        return null;
     }
+    public void editUser(User user) {
+        userRepository.editUser(user);
+    }
+
+
 
 }
 

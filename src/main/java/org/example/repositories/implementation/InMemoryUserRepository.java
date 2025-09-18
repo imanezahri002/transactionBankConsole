@@ -30,6 +30,11 @@ public class InMemoryUserRepository implements UserRepository {
             }
 
     }
+    @Override
+    public void editUser(User user) {
+        users.add(user);
+        System.out.println("mis a jour " + user.getFullname() + " | " + user.getEmail());
+    }
 
 
 
