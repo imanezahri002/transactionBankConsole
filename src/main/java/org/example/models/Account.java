@@ -2,19 +2,22 @@ package org.example.models;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.UUID;
+
+
 
 public class Account {
     String accountId;
-    UUID ownerUserId;
+    User ownerUser;
     boolean active;
     Instant createdAt;
     BigDecimal balance;
 
 
-    public Account(String accountId, UUID ownerUserId, boolean active, Instant createdAt, BigDecimal balance) {
+
+
+    public Account(String accountId, User ownerUser,BigDecimal balance) {
         this.accountId=accountId;
-        this.ownerUserId = ownerUserId;
+        this.ownerUser = ownerUser;
         this.active = true;
         this.createdAt = Instant.now();
         this.balance = balance;
@@ -23,8 +26,8 @@ public class Account {
     public String getAccountId() {
         return accountId;
     }
-    public UUID getOwnerUserId() {
-        return ownerUserId;
+    public User getOwnerUser() {
+        return ownerUser;
     }
     public BigDecimal getBalance() {
         return balance;

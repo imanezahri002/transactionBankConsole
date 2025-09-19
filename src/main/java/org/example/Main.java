@@ -1,8 +1,13 @@
 package org.example;
 
+import org.example.models.Account;
 import org.example.models.User;
+import org.example.repositories.implementation.InMemoryAccountRepository;
+import org.example.services.AccountService;
 import org.example.services.AuthService;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 import org.example.repositories.implementation.InMemoryUserRepository;
 import org.example.services.AuthService;
@@ -13,7 +18,12 @@ public class Main {
 
     private static InMemoryUserRepository userRepo = new InMemoryUserRepository(); // le "carnet"
     private static AuthService authService = new AuthService(userRepo);
+
+    private static InMemoryAccountRepository accountRepository = new InMemoryAccountRepository();
+    private static AccountService accountService = new AccountService(accountRepository);
+
     private static User currentUser = null;
+
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -114,9 +124,11 @@ public class Main {
         switch (choice) {
             case 1 -> {
                 System.out.print("1. create account : ");
+                createAccount();
             }
             case 2 -> {
                 System.out.print("2. list my accounts : ");
+                displayAccountsByUser(currentUser);
             }
             case 3 -> {
                 System.out.print("3. deposit : ");
@@ -169,14 +181,35 @@ public class Main {
         currentUser.setEmail(email);
         currentUser.setAdresse(adresse);
         currentUser.setPassword(password);
-
         authService.editUser(currentUser);
+
     }
 
-    private static void createAccount(){
+    private static void createAccount() {
         System.out.print("Create account : ");
+        System.out.print(" Solde initial : ");
+        BigDecimal balance = scanner.nextBigDecimal();
+        scanner.nextLine();
 
+        Account account = accountService.addAccount(currentUser, balance);
+        System.out.println("Compte créé avec ID : " + account.getAccountId());
+    }
+    public static void displayAccountsByUser(User user) {
+        System.out.print("My Accounts : ");
+        List<Account> accounts = accountRepository.findAccountsByOwner(currentUser);
 
+        if(accounts.isEmpty()){
+            System.out.println("No accounts found");
+
+        }
+        else{
+            for(Account account : accounts){
+                System.out.println("IdAccount : " + account.getAccountId()
+                                    +"\nbalance:" + account.getBalance()
+                                    +"\nis active:"+ account.isActive()
+                                    +"\ncreated At"+ account.getCreatedAt());
+            }
+        }
     }
 
 

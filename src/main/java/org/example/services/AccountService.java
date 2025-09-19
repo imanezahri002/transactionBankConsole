@@ -1,33 +1,35 @@
 package org.example.services;
 
 import org.example.models.Account;
+import org.example.models.User;
 import org.example.repositories.interfaces.AccountRepository;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 
 public class AccountService {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
-    public Account createAccount(String accountId, UUID ownerUserId, BigDecimal initialBalance) {
-        Account account = new Account(
-                accountId,
-                ownerUserId,
-                true,
-                Instant.now(),
-                initialBalance
-        );
-        accountRepository.addAccount(account);
+    public Account addAccount(User user, BigDecimal balance) {
+        String accountId = UUID.randomUUID().toString();
+        Account account = new Account(accountId,user,balance);
+        accountRepository.save(account);
         return account;
     }
+
+    public List<Account> findAccountByOwner(User owner){
+        return accountRepository.findAccountsByOwner(owner);
+    }
+
 
 
 }
