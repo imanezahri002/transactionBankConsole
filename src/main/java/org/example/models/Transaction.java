@@ -8,4 +8,11 @@ public class Transaction {
     Instant timestamp;
     String accountId;
 
+    enum type {
+        DEPOSIT,
+        WITHDRAW,
+        TRANSFERIN,
+        TRANSFEROUT}
+
+
 }

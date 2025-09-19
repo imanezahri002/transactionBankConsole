@@ -26,4 +26,8 @@ public class InMemoryAccountRepository implements AccountRepository {
         }
         return userAccounts;
     }
+    @Override
+    public void desactivateAccount(Account account) {
+        account.setActive(false);
+    }
 }

@@ -123,11 +123,11 @@ public class Main {
         scanner.nextLine();
         switch (choice) {
             case 1 -> {
-                System.out.print("1. create account : ");
+                System.out.print("1. create account : \n");
                 createAccount();
             }
             case 2 -> {
-                System.out.print("2. list my accounts : ");
+                System.out.print("2. list my accounts : \n");
                 displayAccountsByUser(currentUser);
             }
             case 3 -> {
@@ -153,6 +153,8 @@ public class Main {
             }
             case 9 -> {
                 System.out.print("9. Close account : ");
+                clotureAccount();
+
             }
             case 10 -> {
                 System.out.print("10. Logout avec succes ");
@@ -212,6 +214,13 @@ public class Main {
         }
     }
 
-
+    public static void clotureAccount() {
+        System.out.println("\n=== Clôturer un compte ===");
+        System.out.println("Voici vos comptes :\n");
+        displayAccountsByUser(currentUser);
+        System.out.print("Entrez l'ID du compte à clôturer : ");
+        String accountId = scanner.nextLine();
+        accountService.desactivateAccount(accountId, currentUser);
+    }
 
 }

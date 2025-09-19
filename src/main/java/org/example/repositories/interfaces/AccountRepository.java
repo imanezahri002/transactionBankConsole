@@ -8,5 +8,6 @@ import java.util.List;
 public interface AccountRepository {
     void save(Account account);
     List<Account> findAccountsByOwner(User owner);
+    void desactivateAccount(Account account);
 
 }

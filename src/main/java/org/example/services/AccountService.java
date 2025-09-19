@@ -30,6 +30,23 @@ public class AccountService {
         return accountRepository.findAccountsByOwner(owner);
     }
 
+    public void desactivateAccount(String accountId, User owner) {
+        List<Account> userAccounts = accountRepository.findAccountsByOwner(owner);
+
+        for (Account acc : userAccounts) {
+            if (acc.getAccountId().equals(accountId)) {
+                if (acc.getBalance().compareTo(BigDecimal.ZERO) == 0) {
+                    accountRepository.desactivateAccount(acc); // appel repo
+                    System.out.println("Compte " + acc.getAccountId() + " clôturé avec succès !");
+                } else {
+                    System.out.println("Impossible de clôturer, solde non nul : " + acc.getBalance());
+                }
+                return;
+            }
+        }
+        System.out.println("Compte introuvable ou vous n'êtes pas le propriétaire.");
+    }
+
 
 
 }
