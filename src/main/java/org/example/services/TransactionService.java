@@ -31,6 +31,29 @@ public class TransactionService {
         transactionRepository.deposit(amount, acc);
     }
 
+    public void withdrawAccount(BigDecimal amount, String accountId, User owner) {
+        Account account = accountRepository.findAccountByIdAndOwner(accountId, owner);
+
+        if (account == null) {
+            System.out.println("Compte introuvable");
+            return;
+        }
+
+        if (!account.isActive()) {
+            System.out.println("Ce compte est désactivé, impossible de retirer.");
+            return;
+        }
+
+        if (account.getBalance().compareTo(amount) < 0) {
+            System.out.println("Solde insuffisant !");
+            return;
+        }
+
+        transactionRepository.withdraw(amount, account);
+        System.out.println("Retrait de " + amount + " effectué avec succès sur le compte " + account.getAccountId());
+    }
+
+
 
 
 }

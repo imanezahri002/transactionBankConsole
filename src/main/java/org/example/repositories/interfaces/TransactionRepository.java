@@ -6,4 +6,5 @@ import java.math.BigDecimal;
 
 public interface TransactionRepository {
     void deposit(BigDecimal amount, Account account);
+    void withdraw(BigDecimal amount, Account account);
 }

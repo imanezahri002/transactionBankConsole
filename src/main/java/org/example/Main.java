@@ -143,6 +143,7 @@ public class Main {
             }
             case 4 -> {
                 System.out.print("4. withdraw : ");
+                withdrawAccount();
             }
             case 5 -> {
                 System.out.print("5. transfer : ");
@@ -240,4 +241,20 @@ public class Main {
         BigDecimal amount = scanner.nextBigDecimal();
         transactionService.depositAccount(amount,account,currentUser);
     }
+    public static void withdrawAccount() {
+        System.out.println("\n=== Retrait d'un compte ===\n");
+        System.out.println("Voici vos comptes disponibles :\n");
+
+        displayAccountsByUser(currentUser);
+
+        System.out.print("➡ Entrez l'ID du compte : ");
+        String accountId = scanner.nextLine().trim();
+
+        System.out.print("➡ Entrez le montant à retirer : ");
+        BigDecimal amount = scanner.nextBigDecimal();
+        scanner.nextLine(); // vider le buffer
+
+        transactionService.withdrawAccount(amount, accountId, currentUser);
+    }
 }
+

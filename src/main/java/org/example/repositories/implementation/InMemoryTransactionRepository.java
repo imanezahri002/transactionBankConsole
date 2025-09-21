@@ -11,4 +11,9 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     public void deposit(BigDecimal amount, Account account){
         account.setBalance(account.getBalance().add(amount));
     }
+
+    @Override
+    public void withdraw(BigDecimal amount, Account account) {
+        account.setBalance(account.getBalance().subtract(amount));
+    }
 }
