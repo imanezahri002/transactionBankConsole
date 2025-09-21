@@ -30,4 +30,12 @@ public class InMemoryAccountRepository implements AccountRepository {
     public void desactivateAccount(Account account) {
         account.setActive(false);
     }
+
+    @Override
+    public Account findAccountByIdAndOwner(String accountId, User owner) {
+        return accounts.stream()
+                .filter(acc -> acc.getAccountId().equals(accountId) && acc.getOwnerUser().equals(owner))
+                .findFirst()
+                .orElse(null);
+    }
 }

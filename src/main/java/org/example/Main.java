@@ -3,6 +3,7 @@ package org.example;
 import org.example.models.Account;
 import org.example.models.User;
 import org.example.repositories.implementation.InMemoryAccountRepository;
+import org.example.repositories.implementation.InMemoryTransactionRepository;
 import org.example.services.AccountService;
 import org.example.services.AuthService;
 
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.Scanner;
 import org.example.repositories.implementation.InMemoryUserRepository;
 import org.example.services.AuthService;
+import org.example.services.TransactionService;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -21,6 +24,9 @@ public class Main {
 
     private static InMemoryAccountRepository accountRepository = new InMemoryAccountRepository();
     private static AccountService accountService = new AccountService(accountRepository);
+
+    private static InMemoryTransactionRepository transactionRepository = new InMemoryTransactionRepository();
+    private static TransactionService transactionService = new TransactionService(transactionRepository,accountRepository);
 
     private static User currentUser = null;
 
@@ -132,6 +138,8 @@ public class Main {
             }
             case 3 -> {
                 System.out.print("3. deposit : ");
+                dipositeAccount();
+
             }
             case 4 -> {
                 System.out.print("4. withdraw : ");
@@ -223,4 +231,13 @@ public class Main {
         accountService.desactivateAccount(accountId, currentUser);
     }
 
+    public static void dipositeAccount(){
+        System.out.println("\n=== Diposite compte ===\n");
+        System.out.println("Voici vos comptes pour choisir lequelle vous voulez le faire un depot:\n");
+        displayAccountsByUser(currentUser);
+        String account = scanner.nextLine();
+        System.out.print("Entrer la somme que vous voulez diposer");
+        BigDecimal amount = scanner.nextBigDecimal();
+        transactionService.depositAccount(amount,account,currentUser);
+    }
 }

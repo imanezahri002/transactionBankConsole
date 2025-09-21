@@ -9,5 +9,6 @@ public interface AccountRepository {
     void save(Account account);
     List<Account> findAccountsByOwner(User owner);
     void desactivateAccount(Account account);
+    Account findAccountByIdAndOwner(String accountId, User owner);
 
 }
